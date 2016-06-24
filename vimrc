@@ -136,7 +136,7 @@ autocmd FileType python setlocal et | setlocal sta | setlocal sw=4
 
 
 "新建.c,.h,.sh,.java.sh文件，自动插入文件头 
-autocmd BufNewFile *.cpp,*.[ch],*.sh,*.java,*.py exec ":call SetTitle()" 
+autocmd BufNewFile *.cpp,*.[ch],*.sh,*.java,*.py,*.lua exec ":call SetTitle()" 
 ""定义函数SetTitle，自动插入文件头 
 func SetTitle() 
 	"如果文件类型为.sh文件 
@@ -158,6 +158,14 @@ func SetTitle()
 		call append(line(".")+4, "\#########################################################################") 
 		call append(line(".")+5, "\#!/usr/bin/env python") 
 		call append(line(".")+6, "") 
+    elseif &filetype == 'lua'
+		call setline(1, "\#!/usr/bin/env lua")
+        call append(line("."), "--\# File Name: ".expand("%")) 
+        call append(line(".")+1, "--\# Author: Sam") 
+        call append(line(".")+2, "--\# mail: samyunwei@163.com") 
+        call append(line(".")+3, "--\# Created Time: ".strftime("%c")) 
+        call append(line(".")+4, "--\#########################################################################") 
+        call append(line(".")+5, "") 
 	else 
 		call setline(1, "/*************************************************************************") 
 		call append(line("."), "	> File Name: ".expand("%")) 
@@ -177,9 +185,52 @@ func SetTitle()
 		call append(line(".")+7, "")
 	endif
 	if &filetype == 'java'
-	call append(line(".")+6,"public class ".expand("%"))
-	call append(line(".")+7,"")
+        call append(line(".")+6,"public class ".expand("%"))
+        call append(line(".")+7,"")
 	endif
 	"新建文件后，自动定位到文件末尾
 	autocmd BufNewFile * normal G
 endfunc 
+
+func CompileCC()
+    exec "make"
+    echo "just complie"
+endfunc
+
+func CompileJava()
+    exec "!javac %"
+    echo "just compile"
+endfunc
+
+func RunPython()
+    exec "!python %"
+endfunc
+
+func RunLua()
+    exec "!lua %"
+endfunc
+
+func RunShell()
+    exec "!chmod a+x %"
+    exec "!./%"
+endfunc
+
+""定义函数AutoRun，自动运行 
+func AutoRun() 
+    exec "w"
+	if &filetype == 'sh'
+        exec "call RunShell()"
+    elseif &filetype == 'python'
+        exec "call RunPython()"
+    elseif &filetype == 'lua'
+        exec "call RunLua()"
+    elseif &filetype == 'cpp'
+        exec "cal CompileCC()"
+    elseif &filetype == 'c'
+        exec "cal CompileCC()"
+    elseif &filetype == 'java'
+        exec "cal CompileJava()"
+	endif
+endfunc 
+
+map <F6> :call AutoRun()<CR>
