@@ -135,8 +135,8 @@ autocmd FileType python setlocal et | setlocal sta | setlocal sw=4
 
 
 
-"新建.c,.h,.sh,.java.sh文件，自动插入文件头 
-autocmd BufNewFile *.cpp,*.[ch],*.sh,*.java,*.py,*.lua exec ":call SetTitle()" 
+"新建.c,.h,.sh,.java,.sh,.py,.lua,.hs文件，自动插入文件头 
+autocmd BufNewFile *.cpp,*.[ch],*.sh,*.java,*.py,*.lua,*.hs exec ":call SetTitle()" 
 ""定义函数SetTitle，自动插入文件头 
 func SetTitle() 
 	if &filetype == 'sh'
@@ -164,6 +164,14 @@ func SetTitle()
         call append(line(".")+2, "--\# mail: samyunwei@163.com") 
         call append(line(".")+3, "--\# Created Time: ".strftime("%c")) 
         call append(line(".")+4, "--\#########################################################################") 
+        call append(line(".")+5, "") 
+    elseif &filetype == 'haskell'
+		call setline(1, "--------------------------------------------------------------------------------------")
+        call append(line("."), "-- File Name: ".expand("%")) 
+        call append(line(".")+1, "-- Author: Sam") 
+        call append(line(".")+2, "-- mail: samyunwei@163.com") 
+        call append(line(".")+3, "-- Created Time: ".strftime("%c")) 
+        call append(line(".")+4, "----------------------------------------------------------------------------") 
         call append(line(".")+5, "") 
 	else 
 		call setline(1, "/*************************************************************************") 
@@ -216,6 +224,10 @@ func RunShell()
     exec "!./%"
 endfunc
 
+func RunHaskell()
+    exec "!ghci %"
+endfunc
+
 ""定义函数AutoRun，自动运行 
 func AutoRun() 
     exec "w"
@@ -226,11 +238,13 @@ func AutoRun()
     elseif &filetype == 'lua'
         exec "call RunLua()"
     elseif &filetype == 'cpp'
-        exec "cal CompileCC()"
+        exec "call CompileCC()"
     elseif &filetype == 'c'
-        exec "cal CompileCC()"
+        exec "call CompileCC()"
     elseif &filetype == 'java'
-        exec "cal CompileJava()"
+        exec "call CompileJava()"
+    elseif &filetype == 'haskell'
+        exec "call RunHaskell()"
 	endif
 endfunc 
 
