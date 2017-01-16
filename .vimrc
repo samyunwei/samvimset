@@ -139,7 +139,6 @@ autocmd FileType python setlocal et | setlocal sta | setlocal sw=4
 autocmd BufNewFile *.cpp,*.[ch],*.sh,*.java,*.py,*.lua exec ":call SetTitle()" 
 ""定义函数SetTitle，自动插入文件头 
 func SetTitle() 
-	"如果文件类型为.sh文件 
 	if &filetype == 'sh'
 		call setline(1,"\#!/bin/bash") 
 		call append(line("."), "\#########################################################################") 
@@ -209,7 +208,7 @@ endfunc
 
 func RunLua()
     exec "!chmod a+x %"
-    exec "!lua %"
+    exec "!lua5.3 %"
 endfunc
 
 func RunShell()
