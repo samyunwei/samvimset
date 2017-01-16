@@ -78,7 +78,7 @@ let g:winManagerWidth = 20 "设置WinManager宽度, 默认25
  let g:winManagerWindowLayout='FileExplorer|BufExplorer'
  nmap wm :WMToggle<cr>
  "进入vim 自动打开 WinManager
- let g:AutoOpenWinManager = 1
+ let g:AutoOpenWinManager = 0
 
  syntax enable
  syntax on
@@ -141,22 +141,22 @@ autocmd BufNewFile *.cpp,*.[ch],*.sh,*.java,*.py,*.lua exec ":call SetTitle()"
 func SetTitle() 
 	"如果文件类型为.sh文件 
 	if &filetype == 'sh'
-		call setline(1,"\#########################################################################") 
-		call append(line("."), "\# File Name: ".expand("%")) 
-		call append(line(".")+1, "\# Author: Sam") 
-		call append(line(".")+2, "\# mail: samyunwei@163.com") 
-		call append(line(".")+3, "\# Created Time: ".strftime("%c")) 
-		call append(line(".")+4, "\#########################################################################") 
-		call append(line(".")+5, "\#!/bin/bash") 
+		call setline(1,"\#!/bin/bash") 
+		call append(line("."), "\#########################################################################") 
+		call append(line(".")+1, "\# File Name: ".expand("%")) 
+		call append(line(".")+2, "\# Author: Sam") 
+		call append(line(".")+3, "\# mail: samyunwei@163.com") 
+		call append(line(".")+4, "\# Created Time: ".strftime("%c")) 
+		call append(line(".")+5, "\#########################################################################") 
 		call append(line(".")+6, "") 
     elseif &filetype == 'python'
-		call setline(1,"# -*- coding: UTF-8 -*- ") 
-		call append(line("."), "\# File Name: ".expand("%")) 
-		call append(line(".")+1, "\# Author: Sam") 
-		call append(line(".")+2, "\# mail: samyunwei@163.com") 
-		call append(line(".")+3, "\# Created Time: ".strftime("%c")) 
-		call append(line(".")+4, "\#########################################################################") 
-		call append(line(".")+5, "\#!/usr/bin/env python") 
+		call setline(1,"\#!/usr/bin/env python") 
+		call append(line("."), "# -*- coding: UTF-8 -*-")
+		call append(line(".")+1, "\# File Name: ".expand("%")) 
+		call append(line(".")+2, "\# Author: Sam") 
+		call append(line(".")+3, "\# mail: samyunwei@163.com") 
+		call append(line(".")+4, "\# Created Time: ".strftime("%c")) 
+		call append(line(".")+5, "\#########################################################################") 
 		call append(line(".")+6, "") 
     elseif &filetype == 'lua'
 		call setline(1, "\#!/usr/bin/env lua")
