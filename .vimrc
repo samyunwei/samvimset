@@ -159,7 +159,7 @@ func SetTitle()
 		call append(line(".")+5, "\#########################################################################") 
 		call append(line(".")+6, "") 
     elseif &filetype == 'lua'
-		call setline(1, "\#!/usr/bin/env lua")
+		call setline(1, "\#!/usr/bin/env lua5.3")
         call append(line("."), "--\# File Name: ".expand("%")) 
         call append(line(".")+1, "--\# Author: Sam") 
         call append(line(".")+2, "--\# mail: samyunwei@163.com") 
@@ -203,10 +203,12 @@ func CompileJava()
 endfunc
 
 func RunPython()
+    exec "!chmod a+x %"
     exec "!python %"
 endfunc
 
 func RunLua()
+    exec "!chmod a+x %"
     exec "!lua %"
 endfunc
 
